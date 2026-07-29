@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 # 1. Google Apps Script Web App URL 설정 (사용자 환경에 맞게 변경 필수)
 # ----------------------------------------------------------------------
 # 아래 URL은 Google Apps Script 배포 후 생성된 "웹앱 URL"로 교체해야 합니다.
-APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz5T2sMdKPDKYW_QKyodmP6Hk7QM44czdjID7IC3C0EEXLmiQOUFIEbKHL-LOaMeJyK/exec" 
+APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8tZw3VsAUKkHVXrCmS1bIkkFDIx38R8CX_YxM8zj6atI6pKyhGhz7J3nuQpTfAyfd/exec" 
 
 st.set_page_config(page_title="팀 예산 관리 시스템", page_icon="📊", layout="wide")
 
