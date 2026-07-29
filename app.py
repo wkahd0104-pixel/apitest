@@ -93,6 +93,27 @@ def save_data(entry_data):
         st.error(f"데이터 저장 중 예외 발생: {e}")
         return False
 
+def ask_llm(prompt):
+    """Apps Script API를 통해 mygemini 함수를 호출합니다."""
+    if APPS_SCRIPT_URL == "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE":
+        return "Apps Script URL이 설정되지 않았습니다."
+        
+    try:
+        headers = {'Content-Type': 'application/json'}
+        payload = {"action": "ask_llm", "prompt": prompt}
+        response = requests.post(APPS_SCRIPT_URL, data=json.dumps(payload), headers=headers)
+        
+        if response.status_code == 200:
+            result = response.json()
+            if result.get("status") == "success":
+                return result.get("answer")
+            else:
+                return f"오류 발생: {result.get('message')}"
+        else:
+            return f"API 연결 실패 (Status Code: {response.status_code})"
+    except Exception as e:
+        return f"예외 발생: {e}"
+
 def get_sample_data():
     """URL 설정 전 테스트용 샘플 데이터"""
     data = [
@@ -105,6 +126,22 @@ def get_sample_data():
 
 st.title("📊 팀 예산 관리 시스템 (Streamlit + Sheets)")
 st.caption("Google Spreadsheet DB 연동 대시보드")
+
+# AI 어시스턴트 영역 추가
+st.markdown("### 🤖 AI 예산 어시스턴트")
+with st.container(border=True):
+    llm_query = st.text_input("질문을 입력하면 mygemini가 답변해 드립니다.", placeholder="예: 이번 달 지출 중 수선유지비 비중이 어떻게 돼?")
+    
+    if st.button("질문하기", type="primary"):
+        if llm_query:
+            with st.spinner("AI가 답변을 생성하고 있습니다..."):
+                # LLM 함수 호출
+                llm_answer = ask_llm(llm_query)
+                st.success(llm_answer)
+        else:
+            st.warning("질문을 먼저 입력해주세요.")
+            
+st.divider() # 시각적 분리선
 
 # 탭 구성
 tab_input, tab_dashboard = st.tabs(["📝 데이터 입력", "📈 전체 대시보드"])
