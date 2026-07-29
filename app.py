@@ -150,7 +150,7 @@ with tab_input:
                 with st.spinner("저장 중..."):
                     if save_data(new_entry):
                         st.success("예산 데이터가 성공적으로 저장되었습니다.")
-                        st.experimental_rerun() # 화면 새로고침하여 데이터 반영
+                        st.rerun() # 화면 새로고침하여 데이터 반영
                     else:
                         if APPS_SCRIPT_URL == "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE":
                              st.info("현재 샘플 모드입니다. 실제 저장을 위해서는 URL을 설정하세요.")
